@@ -1,0 +1,54 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: greenwweez raw data source
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: general sales
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+        freshness:
+          warn_after:
+            count: 90
+            period: day
+        loaded_at_field: "CAST(date_date as Timestamp)"
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: identifier a sale takes
+          - name: products_id
+            description: especific nunmber identifier
+          - name: revenue
+            description: total money earned per sale
+          - name: quantity
+            description: total of objetcs per sale
+      - name: product
+        identifier: raw_gz_product
+        description: products of greenweez
+        columns:
+          - name: products_id
+            description: PK. Unique value per item
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: the value the company invest to own the item
+      - name:  ship
+        identifier: raw_gz_ship
+        description: details about the shipping situation
+        columns:
+          - name: orders_id
+            description: PK. Identifier a sale takes
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: rate the shipping has
+          - name: logcost
+            description: logistic price
+          - name: shipcost
