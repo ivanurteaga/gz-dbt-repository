@@ -55,6 +55,9 @@ sources:
       - name: adwords
         identifier: raw_gz_adwords
         description: adwords
+        tests:
+          - unique:
+              column_name: "( date_date || '-' || impression || '-' || click )"        
         columns:
           - name: date_date
           - name: paid_source
@@ -66,6 +69,9 @@ sources:
       - name: bing
         identifier: raw_gz_bing
         description: bing page
+        tests:
+          - unique:
+              column_name: "( date_date || '-' || impression || '-' || click )"  
         columns:
           - name: date_date
           - name: paid_source
@@ -88,6 +94,9 @@ sources:
       - name: facebook
         identifier: raw_gz_facebook
         description: facebook page
+        tests:
+          - unique:
+              column_name: "( date_date || '-' || impression || '-' || click )"          
         columns:
           - name: date_date
           - name: paid_source
